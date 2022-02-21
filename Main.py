@@ -20,17 +20,16 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.channel.name == 'bot-test':
-        if user_message.startswith("!search"):
-            #get the title of the video
-            video = str(user_message).split(' ', 1)
-            remove = video.pop(0)
-            video = ' '.join(map(str, video))
-            video = video.replace(' ', '+')
+    if user_message.startswith("!search"):
+        #get the title of the video
+        video = str(user_message).split(' ', 1)
+        remove = video.pop(0)
+        video = ' '.join(map(str, video))
+        video = video.replace(' ', '+')
 
-            html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + video)
-            video_id = re.findall(r"watch\?v=(\S{11})", html.read().decode())
-            await message.channel.send("https://www.youtube.com/watch?v=" + video_id[0])
+        html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + video)
+        video_id = re.findall(r"watch\?v=(\S{11})", html.read().decode())
+        await message.channel.send("https://www.youtube.com/watch?v=" + video_id[0])
 
 keep_alive()
 TOKEN = os.environ.get("DISCORD_BOT_SECRET")
